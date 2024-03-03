@@ -1,39 +1,56 @@
-// create web server
+// Create web server
+// 1. Load express module
+// 2. Create express application
+// 3. Create a route for get method
+// 4. Create a route for post method
+// 5. Create a route for put method
+// 6. Create a route for delete method
+// 7. Start server
+// 8. Test server
+
+// 1. Load express module
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
-var fs = require('fs');
-var path = require('path');
-var commentsPath = path.join(__dirname, 'comments.json');
 
-// serve static files
-app.use(express.static('public'));
+// 2. Create express application
+var app = express();
 
-// parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
-
-// parse application/json
-app.use(bodyParser.json());
-
-// get comments
+// 3. Create a route for get method
 app.get('/comments', function(req, res) {
-  fs.readFile(commentsPath, function(err, data) {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    res.setHeader('Cache-Control', 'no-cache');
-    res.json(JSON.parse(data));
-  });
+    console.log('GET request');
+    res.send('GET request');
 });
 
-// add comment
+// 4. Create a route for post method
 app.post('/comments', function(req, res) {
-  fs.readFile(commentsPath, function(err, data) {
-    if (err) {
-      console.error(err);
-      process.exit(1);
-    }
-    var comments = JSON.parse(data);
-    var newComment = {
-      id: Date.now(),
+    console.log('POST request');
+    res.send('POST request');
+});
+
+// 5. Create a route for put method
+app.put('/comments', function(req, res) {
+    console.log('PUT request');
+    res.send('PUT request');
+});
+
+// 6. Create a route for delete method
+app.delete('/comments', function(req, res) {
+    console.log('DELETE request');
+    res.send('DELETE request');
+});
+
+// 7. Start server
+var server = app.listen(3000, function() {
+    console.log('Server running at http://localhost:' + server.address().port);
+});
+
+// 8. Test server
+// Open a web browser and go to http://localhost:3000/comments
+// Open a terminal and run the following command: curl -X POST http://localhost:3000/comments
+// Open a terminal and run the following command: curl -X PUT http://localhost:3000/comments
+// Open a terminal and run the following command: curl -X DELETE http://localhost:3000/comments
+// Open a terminal and run the following command: curl -X GET http://localhost:3000/comments
+// Open a terminal and run the following command: curl -X GET http://localhost:3000/comments/123
+// Open a terminal and run the following command: curl -X POST http://localhost:3000/comments/123
+// Open a terminal and run the following command: curl -X PUT http://localhost:3000/comments/123
+// Open a terminal and run the following command: curl -X DELETE http://localhost:3000/comments
